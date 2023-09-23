@@ -19,7 +19,5 @@ public class PhoneModel implements Serializable {
     private String phoneNumber;
     @Column(nullable = false)
     private Boolean isMainPhone;
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserModel user;
+
 }

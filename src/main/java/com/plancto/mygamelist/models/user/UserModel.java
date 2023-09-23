@@ -25,7 +25,8 @@ public class UserModel implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<RoleModel> role;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private List<PhoneModel> phone; // tel cannot be null.
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
