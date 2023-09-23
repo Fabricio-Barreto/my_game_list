@@ -20,15 +20,14 @@ public class UserModel implements Serializable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
     @ManyToMany
     @JoinTable(name = "TB_USERS_ROLES",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<RoleModel> role;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<PhoneModel> phone; // tel cannot be null.
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private LocationModel location;
 
