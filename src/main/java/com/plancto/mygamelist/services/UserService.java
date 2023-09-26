@@ -30,6 +30,11 @@ public class UserService {
         return users.stream().map(user -> new ModelMapper().map(user, UserDTO.class)).collect(Collectors.toList());
     }
 
+    /**
+     * method to add user.
+     * @param userDTO
+     * @return
+     */
     public UserDTO addUser(UserDTO userDTO){
         UserModel user = new ModelMapper().map(userDTO, UserModel.class);
         user = userRepository.save(user);
@@ -38,6 +43,11 @@ public class UserService {
         return userDTO;
     }
 
+    /**
+     * method to get a user by id.
+     * @param id
+     * @return
+     */
     public Optional<UserDTO> getUserById(UUID id) {
         Optional<UserModel> user = userRepository.findById(id);
         if(user.isEmpty()) {
@@ -47,6 +57,10 @@ public class UserService {
         return Optional.of(userDTO);
     }
 
+    /**
+     * method to delete a user.
+     * @param id
+     */
     public void deleteUser(UUID id){
         Optional<UserModel> user = userRepository.findById(id);
         if(user.isEmpty()){
@@ -55,6 +69,12 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    /**
+     * method to update a user.
+     * @param id
+     * @param userDTO
+     * @return
+     */
     public UserDTO updateUser(UUID id, UserDTO userDTO) {
         Optional<UserModel> userOptional = userRepository.findById(id);
         if(userOptional.isEmpty()){

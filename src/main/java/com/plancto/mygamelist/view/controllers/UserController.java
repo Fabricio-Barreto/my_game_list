@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,7 @@ public class UserController {
         List<UserDTO> users = userService.getAllUsers();
         ModelMapper mapper = new ModelMapper();
         List<UserResponse> usersResponse = users.stream().map(user -> mapper.map(user, UserResponse.class)).collect(Collectors.toList());
+        usersResponse.stream().forEach(userResponse -> userResponse.add(linkTo(methodOn(UserController.class).getUserById(userResponse.getUserId())).withSelfRel()));
         return new ResponseEntity<>(usersResponse, HttpStatus.OK);
     }
 
@@ -35,6 +38,7 @@ public class UserController {
     public ResponseEntity<Optional<UserResponse>> getUserById(@PathVariable UUID id) {
         Optional<UserDTO> userDTO = userService.getUserById(id);
         UserResponse userResponse = new ModelMapper().map(userDTO.get(), UserResponse.class);
+        userResponse.add(linkTo(methodOn(UserController.class).getUserById(id)).withSelfRel());
         return new ResponseEntity<>(Optional.of(userResponse), HttpStatus.OK);
     }
 
@@ -44,8 +48,9 @@ public class UserController {
         ModelMapper mapper = new ModelMapper();
         UserDTO userDTO = mapper.map(userRequest, UserDTO.class);
         userDTO = userService.addUser(userDTO);
-
-        return new ResponseEntity<>(mapper.map(userDTO, UserResponse.class), HttpStatus.CREATED);
+        UserResponse userResponse = mapper.map(userDTO, UserResponse.class);
+        userResponse.add(linkTo(methodOn(UserController.class).addUser(userRequest)).withSelfRel());
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
 
     @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -60,6 +65,8 @@ public class UserController {
         ModelMapper mapper = new ModelMapper();
         UserDTO userDTO = mapper.map(userRequest, UserDTO.class);
         userDTO = userService.updateUser(id, userDTO);
-        return new ResponseEntity<>(mapper.map(userDTO, UserResponse.class), HttpStatus.OK);
+        UserResponse userResponse = mapper.map(userDTO, UserResponse.class);
+        userResponse.add(linkTo(methodOn(UserController.class).updateUser(userRequest, id)).withSelfRel());
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 }
