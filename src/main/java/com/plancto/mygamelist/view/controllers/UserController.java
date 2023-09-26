@@ -12,10 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     @Autowired
@@ -29,12 +31,35 @@ public class UserController {
         return new ResponseEntity<>(usersResponse, HttpStatus.OK);
     }
 
-    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Optional<UserResponse>> getUserById(@PathVariable UUID id) {
+        Optional<UserDTO> userDTO = userService.getUserById(id);
+        UserResponse userResponse = new ModelMapper().map(userDTO.get(), UserResponse.class);
+        return new ResponseEntity<>(Optional.of(userResponse), HttpStatus.OK);
+    }
+
+    @PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<UserResponse> addUser(@RequestBody UserRequest userRequest) {
         ModelMapper mapper = new ModelMapper();
         UserDTO userDTO = mapper.map(userRequest, UserDTO.class);
         userDTO = userService.addUser(userDTO);
 
         return new ResponseEntity<>(mapper.map(userDTO, UserResponse.class), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest userRequest, @PathVariable UUID id) {
+        ModelMapper mapper = new ModelMapper();
+        UserDTO userDTO = mapper.map(userRequest, UserDTO.class);
+        userDTO = userService.updateUser(id, userDTO);
+        return new ResponseEntity<>(mapper.map(userDTO, UserResponse.class), HttpStatus.OK);
     }
 }
