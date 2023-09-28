@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><database name="mygamelist" schema="public" type="PostgreSQL - 15.1">
+   <sequences>
+      <sequence increment="50" name="tb_developer_seq" startValue="1"/>
+      <sequence increment="50" name="tb_game_seq" startValue="1"/>
+      <sequence increment="50" name="tb_genre_seq" startValue="1"/>
+      <sequence increment="50" name="tb_platform_seq" startValue="1"/>
+      <sequence increment="50" name="tb_publisher_seq" startValue="1"/>
+   </sequences>
+   <tables>
+      <table name="flyway_schema_history" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="installed_rank" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="version" nullable="true" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="description" nullable="false" remarks="" size="200" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="type" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="script" nullable="false" remarks="" size="1000" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="checksum" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="installed_by" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="now()" digits="6" id="7" name="installed_on" nullable="false" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="execution_time" nullable="false" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="success" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <primaryKey column="installed_rank" sequenceNumberInPK="1"/>
+         <index name="flyway_schema_history_pk" unique="true">
+            <column ascending="true" name="installed_rank"/>
+         </index>
+         <index name="flyway_schema_history_s_idx" unique="false">
+            <column ascending="true" name="success"/>
+         </index>
+      </table>
+      <table name="tb_developer" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="developer_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <child column="developer_id" foreignKey="fkob5hod9ph1b5uh2cop5mr977e" implied="false" onDeleteCascade="false" schema="public" table="tb_game"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="ceo" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="founded" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="headquarter" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="website" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="developer_id" sequenceNumberInPK="1"/>
+         <index name="tb_developer_pkey" unique="true">
+            <column ascending="true" name="developer_id"/>
+         </index>
+      </table>
+      <table name="tb_game" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="game_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <child column="game_id" foreignKey="fksebr6c9ehujo2swjesheddeg0" implied="false" onDeleteCascade="false" schema="public" table="tb_games_genre"/>
+            <child column="game_id" foreignKey="fk78ku0acl20f9rso29vkjkl44i" implied="false" onDeleteCascade="false" schema="public" table="tb_games_platform"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="1" name="release_date" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="title" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="developer_id" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
+            <parent column="developer_id" foreignKey="fkob5hod9ph1b5uh2cop5mr977e" implied="false" onDeleteCascade="false" schema="public" table="tb_developer"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="publisher_id" nullable="true" remarks="" size="19" type="int8" typeCode="-5">
+            <parent column="publisher_id" foreignKey="fklf2h462lyprjqcgwxye534ihl" implied="false" onDeleteCascade="false" schema="public" table="tb_publisher"/>
+         </column>
+         <primaryKey column="game_id" sequenceNumberInPK="1"/>
+         <index name="tb_game_pkey" unique="true">
+            <column ascending="true" name="game_id"/>
+         </index>
+      </table>
+      <table name="tb_games_genre" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="game_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <parent column="game_id" foreignKey="fksebr6c9ehujo2swjesheddeg0" implied="false" onDeleteCascade="false" schema="public" table="tb_game"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="genre_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <parent column="genre_id" foreignKey="fkay3oq3klihqls66opove6d9ih" implied="false" onDeleteCascade="false" schema="public" table="tb_genre"/>
+         </column>
+      </table>
+      <table name="tb_games_platform" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="game_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <parent column="game_id" foreignKey="fk78ku0acl20f9rso29vkjkl44i" implied="false" onDeleteCascade="false" schema="public" table="tb_game"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="platform_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <parent column="platform_id" foreignKey="fkhs4jt25aubsiss59fabu6vw1h" implied="false" onDeleteCascade="false" schema="public" table="tb_platform"/>
+         </column>
+      </table>
+      <table name="tb_genre" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="genre_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <child column="genre_id" foreignKey="fkay3oq3klihqls66opove6d9ih" implied="false" onDeleteCascade="false" schema="public" table="tb_games_genre"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="genre_name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="genre_id" sequenceNumberInPK="1"/>
+         <index name="tb_genre_pkey" unique="true">
+            <column ascending="true" name="genre_id"/>
+         </index>
+         <index name="uk_et2kjuco6tru4b2j48ia3y6aj" unique="true">
+            <column ascending="true" name="genre_name"/>
+         </index>
+         <checkConstraint constraint="(((genre_name)::text = ANY ((ARRAY['ACTION'::character varying, 'HORROR'::character varying, 'FPS'::character varying, 'MMORPG'::character varying, 'RPG'::character varying, 'MOBA'::character varying, 'RTS'::character varying, 'PVP'::character varying, 'COOP'::character varying, 'FPA'::character varying])::text[])))" name="tb_genre_genre_name_check"/>
+      </table>
+      <table name="tb_location" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="location_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <child column="location_id" foreignKey="fk4qhn01b35rve9g9j0cl3u1r22" implied="false" onDeleteCascade="false" schema="public" table="tb_user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cep" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="city" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="country" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="state" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="zip_code" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="location_id" sequenceNumberInPK="1"/>
+         <index name="tb_location_pkey" unique="true">
+            <column ascending="true" name="location_id"/>
+         </index>
+      </table>
+      <table name="tb_phone" numRows="20" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="is_main_phone" nullable="false" remarks="" size="1" type="bool" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="phone_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="user_id" nullable="true" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="user_id" foreignKey="fkjjbcywxyw2amay8m6ow0t9yxj" implied="false" onDeleteCascade="false" schema="public" table="tb_user"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="phone_number" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="phone_id" sequenceNumberInPK="1"/>
+         <index name="tb_phone_pkey" unique="true">
+            <column ascending="true" name="phone_id"/>
+         </index>
+      </table>
+      <table name="tb_platform" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="platform_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <child column="platform_id" foreignKey="fkhs4jt25aubsiss59fabu6vw1h" implied="false" onDeleteCascade="false" schema="public" table="tb_games_platform"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="platform_name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="platform_id" sequenceNumberInPK="1"/>
+         <index name="tb_platform_pkey" unique="true">
+            <column ascending="true" name="platform_id"/>
+         </index>
+         <index name="uk_j67kevtccowy4fsbu4y4x20n1" unique="true">
+            <column ascending="true" name="platform_name"/>
+         </index>
+         <checkConstraint constraint="(((platform_name)::text = ANY ((ARRAY['PLAYSTAION_2'::character varying, 'PLAYSTAION_3'::character varying, 'PLAYSTAION_4'::character varying, 'PLAYSTATION_5'::character varying, 'PLAYSTATION'::character varying, 'XBOX'::character varying, 'XBOX_360'::character varying, 'XBOX_ONE'::character varying, 'NINTENDO'::character varying, 'SUPER_NINTENDO'::character varying, 'PC'::character varying, 'MOBILE'::character varying])::text[])))" name="tb_platform_platform_name_check"/>
+      </table>
+      <table name="tb_publisher" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="publisher_id" nullable="false" remarks="" size="19" type="int8" typeCode="-5">
+            <child column="publisher_id" foreignKey="fklf2h462lyprjqcgwxye534ihl" implied="false" onDeleteCascade="false" schema="public" table="tb_game"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="ceo" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="6" id="2" name="founded" nullable="true" remarks="" size="29" type="timestamp" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="headquarter" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="website" nullable="true" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="publisher_id" sequenceNumberInPK="1"/>
+         <index name="tb_publisher_pkey" unique="true">
+            <column ascending="true" name="publisher_id"/>
+         </index>
+      </table>
+      <table name="tb_role" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="role_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <child column="role_id" foreignKey="fk6p4o2kxbq23rthm174k19xo2h" implied="false" onDeleteCascade="false" schema="public" table="tb_users_roles"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="role_name" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="role_id" sequenceNumberInPK="1"/>
+         <index name="tb_role_pkey" unique="true">
+            <column ascending="true" name="role_id"/>
+         </index>
+         <index name="tb_role_role_name_key" unique="true">
+            <column ascending="true" name="role_name"/>
+         </index>
+         <checkConstraint constraint="(((role_name)::text = ANY (ARRAY[('ROLE_ADMIN'::character varying)::text, ('ROLE_USER'::character varying)::text])))" name="tb_role_role_name_check"/>
+      </table>
+      <table name="tb_user" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="location_id" nullable="true" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="location_id" foreignKey="fk4qhn01b35rve9g9j0cl3u1r22" implied="false" onDeleteCascade="false" schema="public" table="tb_location"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <child column="user_id" foreignKey="fkjjbcywxyw2amay8m6ow0t9yxj" implied="false" onDeleteCascade="false" schema="public" table="tb_phone"/>
+            <child column="user_id" foreignKey="fk85qorv8qojsxvl1nv56vckxmj" implied="false" onDeleteCascade="false" schema="public" table="tb_users_roles"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="email" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="password" nullable="false" remarks="" size="255" type="varchar" typeCode="12"/>
+         <primaryKey column="user_id" sequenceNumberInPK="1"/>
+         <index name="tb_user_pkey" unique="true">
+            <column ascending="true" name="user_id"/>
+         </index>
+         <index name="tb_user_email_key" unique="true">
+            <column ascending="true" name="email"/>
+         </index>
+         <index name="tb_user_location_id_key" unique="true">
+            <column ascending="true" name="location_id"/>
+         </index>
+      </table>
+      <table name="tb_users_roles" remarks="" schema="public" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="role_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="role_id" foreignKey="fk6p4o2kxbq23rthm174k19xo2h" implied="false" onDeleteCascade="false" schema="public" table="tb_role"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="user_id" nullable="false" remarks="" size="2147483647" type="uuid" typeCode="1111">
+            <parent column="user_id" foreignKey="fk85qorv8qojsxvl1nv56vckxmj" implied="false" onDeleteCascade="false" schema="public" table="tb_user"/>
+         </column>
+      </table>
+   </tables>
+</database>

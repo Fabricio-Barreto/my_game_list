@@ -1,0 +1,13 @@
+flyway_schema_history
+tb_users_roles
+tb_games_platform
+tb_games_genre
+tb_phone
+tb_game
+tb_user
+tb_role
+tb_publisher
+tb_platform
+tb_location
+tb_genre
+tb_developer
