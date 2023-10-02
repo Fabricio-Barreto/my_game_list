@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, UUID> {
+    //TODO Implementar um @Query para adicionar usuario passando as roles_id
 }
