@@ -20,20 +20,20 @@ public class GameModel {
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "platform_id"))
     @Column(nullable = false)
-    private List<PlatformModel> platformModel;
+    private List<PlatformModel> platform;
     @ManyToOne(cascade = CascadeType.ALL)
     //@Column(nullable = false)
     @JoinColumn(name = "developer_id")
-    private DeveloperModel developerModel;
+    private DeveloperModel developer;
     @ManyToOne(cascade = CascadeType.ALL)
     //@Column(nullable = false)
     @JoinColumn(name = "publisher_id")
-    private PublisherModel publisherModel;
+    private PublisherModel publisher;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "TB_GAMES_GENRE",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @Column(nullable = false)
-    private List<GenreModel> genreModel;
+    private List<GenreModel> genre;
     private Date ReleaseDate;
 }

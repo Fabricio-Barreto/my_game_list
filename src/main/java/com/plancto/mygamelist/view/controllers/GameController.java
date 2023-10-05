@@ -1,21 +1,16 @@
 package com.plancto.mygamelist.view.controllers;
 
 import com.plancto.mygamelist.dtos.GameDTO;
-import com.plancto.mygamelist.dtos.UserDTO;
-import com.plancto.mygamelist.models.game.GameModel;
+import com.plancto.mygamelist.models.game.GenreModel;
 import com.plancto.mygamelist.services.GameService;
-import com.plancto.mygamelist.services.UserService;
-import com.plancto.mygamelist.view.models.GameRequest;
-import com.plancto.mygamelist.view.models.GameResponse;
-import com.plancto.mygamelist.view.models.UserRequest;
-import com.plancto.mygamelist.view.models.UserResponse;
+import com.plancto.mygamelist.view.models.requests.GameRequest;
+import com.plancto.mygamelist.view.models.responses.GameResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -127,4 +121,5 @@ public class GameController {
         gameResponse.add(linkTo(methodOn(GameController.class).updateGame(gameRequest, id)).withSelfRel());
         return new ResponseEntity<>(gameResponse, HttpStatus.OK);
     }
+
 }

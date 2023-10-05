@@ -11,7 +11,7 @@ import java.util.Date;
 public class DeveloperModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long developerId;
+    private Long developerId;
     @Column(nullable = false)
     private  String name;
     private String headquarter;

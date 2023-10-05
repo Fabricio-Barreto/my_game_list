@@ -1,4 +1,4 @@
-package com.plancto.mygamelist.view.models;
+package com.plancto.mygamelist.view.models.requests;
 
 import com.plancto.mygamelist.models.game.DeveloperModel;
 import com.plancto.mygamelist.models.game.GenreModel;
@@ -17,9 +17,9 @@ import java.util.List;
 public class GameRequest {
     private Long gameId;
     private String title;
-    private List<PlatformModel> platformModel;
-    private DeveloperModel developerModel;
-    private PublisherModel publisherModel;
-    private List<GenreModel> genreModel;
+    private List<PlatformModel> platform;
+    private DeveloperModel developer;
+    private PublisherModel publisher;
+    private List<GenreModel> genre;
     private Date ReleaseDate;
 }

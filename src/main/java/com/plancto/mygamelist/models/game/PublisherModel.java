@@ -11,7 +11,7 @@ import java.util.Date;
 public class PublisherModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long publisherId;
+    private Long publisherId;
     @Column(nullable = false)
     private  String name;
     private String headquarter;

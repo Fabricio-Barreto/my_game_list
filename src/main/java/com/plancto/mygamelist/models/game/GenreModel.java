@@ -10,7 +10,7 @@ import lombok.Data;
 public class GenreModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long genreId;
+    private Long genreId;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
     private GenreName genreName;

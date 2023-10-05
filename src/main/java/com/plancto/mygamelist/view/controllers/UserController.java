@@ -1,9 +1,10 @@
 package com.plancto.mygamelist.view.controllers;
 
 import com.plancto.mygamelist.dtos.UserDTO;
+import com.plancto.mygamelist.models.game.GenreModel;
 import com.plancto.mygamelist.services.UserService;
-import com.plancto.mygamelist.view.models.UserRequest;
-import com.plancto.mygamelist.view.models.UserResponse;
+import com.plancto.mygamelist.view.models.requests.UserRequest;
+import com.plancto.mygamelist.view.models.responses.UserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -121,4 +122,5 @@ public class UserController {
         userResponse.add(linkTo(methodOn(UserController.class).updateUser(userRequest, id)).withSelfRel());
         return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
+
 }

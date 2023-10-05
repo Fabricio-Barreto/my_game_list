@@ -8,7 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MygamelistApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(MygamelistApplication.class, args);
+
 	}
 
 }

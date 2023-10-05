@@ -10,7 +10,7 @@ import lombok.Data;
 public class PlatformModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long platformId;
+    private Long platformId;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
     private PlatformName platformName;

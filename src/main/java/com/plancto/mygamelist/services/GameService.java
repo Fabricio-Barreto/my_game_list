@@ -4,6 +4,7 @@ import com.plancto.mygamelist.dtos.GameDTO;
 import com.plancto.mygamelist.models.exceptions.BadRequestException;
 import com.plancto.mygamelist.models.exceptions.ResourceNotFoundException;
 import com.plancto.mygamelist.models.game.GameModel;
+import com.plancto.mygamelist.models.game.GenreModel;
 import com.plancto.mygamelist.repositories.GameRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class GameService {
     /**
      * method to add game.
      * @param gameDTO
-     * @return
+     * @return added game
      */
     public GameDTO addGame(GameDTO gameDTO){
         GameModel game = new ModelMapper().map(gameDTO, GameModel.class);
@@ -91,4 +92,5 @@ public class GameService {
 
         return gameDTO;
     }
+
 }
