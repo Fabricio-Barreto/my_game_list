@@ -18,7 +18,7 @@ import java.util.List;
 public class GameResponse extends RepresentationModel<UserResponse> {
     private Long gameId;
     private String title;
-    private List<PlatformModel> platformM;
+    private List<PlatformModel> platform;
     private DeveloperModel developer;
     private PublisherModel publisher;
     private List<GenreModel> genre;

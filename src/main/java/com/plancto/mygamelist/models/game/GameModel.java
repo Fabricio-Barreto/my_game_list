@@ -15,21 +15,21 @@ public class GameModel {
     private Long gameId;
     @Column(nullable = false)
     private String title;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "TB_GAMES_PLATFORM",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "platform_id"))
     @Column(nullable = false)
     private List<PlatformModel> platform;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     //@Column(nullable = false)
     @JoinColumn(name = "developer_id")
     private DeveloperModel developer;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     //@Column(nullable = false)
     @JoinColumn(name = "publisher_id")
     private PublisherModel publisher;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "TB_GAMES_GENRE",
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
