@@ -29,9 +29,7 @@ public class GenreService {
 
     public Optional<GenreDTO> getGenreById(Long id) {
         Optional<GenreModel> genre = genreRepository.findById(id);
-        if(genre.isEmpty()) {
-            throw new ResourceNotFoundException("Genre with id:" + id + "not found!");
-        }
+        if(genre.isEmpty()) throw new ResourceNotFoundException("Genre with id:" + id + "not found!");
         GenreDTO genreDTO = new ModelMapper().map(genre.get(),GenreDTO.class);
         return Optional.of(genreDTO);
     }
