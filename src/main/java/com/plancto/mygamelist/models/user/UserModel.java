@@ -1,16 +1,21 @@
 package com.plancto.mygamelist.models.user;
 
+import com.plancto.mygamelist.enums.RoleName;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.UUID;
 import java.util.List;
 
 @Entity
 @Table(name = "TB_USER")
 @Data
-public class UserModel implements Serializable {
+public class UserModel implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -20,7 +25,7 @@ public class UserModel implements Serializable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(name = "TB_USERS_ROLES",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -32,51 +37,34 @@ public class UserModel implements Serializable {
     @JoinColumn(name = "location_id")
     private LocationModel location;
 
-    public UUID getUserId() {
-        return userId;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role.contains(RoleName.ROLE_ADMIN)) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public List<RoleModel> getRole() {
-        return role;
-    }
-
-    public void setRole(List<RoleModel> role) {
-        this.role = role;
-    }
-
-    public List<PhoneModel> getPhone() {
-        return phone;
-    }
-
-    public void setPhone(List<PhoneModel> phone) {
-        this.phone = phone;
-    }
-
-    public LocationModel getLocation() {
-        return location;
-    }
-
-    public void setLocation(LocationModel location) {
-        this.location = location;
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

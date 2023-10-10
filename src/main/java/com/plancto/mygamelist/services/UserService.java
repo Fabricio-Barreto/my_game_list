@@ -7,6 +7,7 @@ import com.plancto.mygamelist.models.user.UserModel;
 import com.plancto.mygamelist.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,8 +38,11 @@ public class UserService {
      */
     public UserDTO addUser(UserDTO userDTO){
         UserModel user = new ModelMapper().map(userDTO, UserModel.class);
+        String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
+        user.setPassword(encryptedPassword);
         user = userRepository.save(user);
         userDTO.setUserId(user.getUserId());
+        userDTO.setPassword(user.getPassword());
 
         return userDTO;
     }

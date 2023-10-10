@@ -2,11 +2,12 @@ package com.plancto.mygamelist.repositories;
 
 import com.plancto.mygamelist.models.user.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserModel, UUID> {
-    //TODO Implementar um @Query para adicionar usuario passando as roles_id
+    UserDetails findByEmail(String email);
 }
