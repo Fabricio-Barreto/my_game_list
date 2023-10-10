@@ -25,22 +25,23 @@ public class UserModel implements Serializable, UserDetails {
     private String email;
     @Column(nullable = false)
     private String password;
-    @ManyToMany(cascade = CascadeType.MERGE)
+    //FIXME Trocar o FetchType.EAGER para algo que não afete tanto o banco e não dê o erro de lazy ao acessar o endpoint de GET.
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(name = "TB_USERS_ROLES",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<RoleModel> role;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private List<PhoneModel> phone; // tel cannot be null.
+    private List<PhoneModel> phone;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id")
     private LocationModel location;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role.contains(RoleName.ROLE_ADMIN)) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.role.stream().anyMatch(role -> role.getRoleName() == RoleName.ADMIN)) return List.of(new SimpleGrantedAuthority("ADMIN"), new SimpleGrantedAuthority("USER"));
+        else return List.of(new SimpleGrantedAuthority("USER"));
     }
 
     @Override

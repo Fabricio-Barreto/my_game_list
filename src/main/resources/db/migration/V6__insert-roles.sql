@@ -1,1 +1,1 @@
-INSERT INTO tb_role values ('beb06a09-2ff4-41f2-9006-961fb3d9c72e', 'ROLE_ADMIN'), ('fdb01c06-7c9a-4ad8-8007-d50afeb246a9', 'ROLE_USER')
+INSERT INTO tb_role values ('beb06a09-2ff4-41f2-9006-961fb3d9c72e', 'ADMIN'), ('fdb01c06-7c9a-4ad8-8007-d50afeb246a9', 'USER')

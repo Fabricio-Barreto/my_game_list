@@ -1,8 +1,8 @@
 package com.plancto.mygamelist.enums;
 
 public enum RoleName {
-    ROLE_ADMIN("admin"),
-    ROLE_USER("user");
+    ADMIN("admin"),
+    USER("user");
 
     private String role;
 
