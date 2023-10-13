@@ -1,15 +1,19 @@
 package com.plancto.mygamelist.services;
 
 import com.plancto.mygamelist.dtos.UserDTO;
+import com.plancto.mygamelist.enums.RoleName;
 import com.plancto.mygamelist.models.exceptions.BadRequestException;
 import com.plancto.mygamelist.models.exceptions.ResourceNotFoundException;
+import com.plancto.mygamelist.models.user.RoleModel;
 import com.plancto.mygamelist.models.user.UserModel;
+import com.plancto.mygamelist.repositories.RoleRepository;
 import com.plancto.mygamelist.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,12 +25,17 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     /**
      * method to get all users.
      * @return List of users.
      */
     public List<UserDTO> getAllUsers(){
         List<UserModel> users = userRepository.findAll();
+
+
 
         return users.stream().map(user -> new ModelMapper().map(user, UserDTO.class)).collect(Collectors.toList());
     }
@@ -37,11 +46,16 @@ public class UserService {
      * @return
      */
     public UserDTO addUser(UserDTO userDTO){
+        Optional<RoleModel> role = roleRepository.findByRoleName(RoleName.USER);
+        ArrayList<RoleModel> listRole = new ArrayList<>();
+        listRole.add(role.get());
         UserModel user = new ModelMapper().map(userDTO, UserModel.class);
         String encryptedPassword = new BCryptPasswordEncoder().encode(userDTO.getPassword());
+        if (user.getRole() == null) user.setRole(listRole);
         user.setPassword(encryptedPassword);
         user = userRepository.save(user);
         userDTO.setUserId(user.getUserId());
+        userDTO.setRole(user.getRole());
         userDTO.setPassword(user.getPassword());
 
         return userDTO;

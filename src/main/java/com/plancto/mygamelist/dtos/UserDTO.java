@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.UUID;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO{
@@ -20,4 +19,52 @@ public class UserDTO{
     private List<RoleModel> role;
     private List<PhoneModel> phone;
     private LocationModel location;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<RoleModel> getRole() {
+        return role;
+    }
+
+    public void setRole(List<RoleModel> role) {
+        this.role = role;
+    }
+
+    public List<PhoneModel> getPhone() {
+        return phone;
+    }
+
+    public void setPhone(List<PhoneModel> phone) {
+        this.phone = phone;
+    }
+
+    public LocationModel getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationModel location) {
+        this.location = location;
+    }
 }

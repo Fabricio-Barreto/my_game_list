@@ -21,4 +21,19 @@ public class RoleModel implements Serializable {
     @Column(nullable = false, unique = true)
     private RoleName roleName;
 
+    public UUID getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(UUID roleId) {
+        this.roleId = roleId;
+    }
+
+    public RoleName getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(RoleName roleName) {
+        this.roleName = roleName;
+    }
 }

@@ -8,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_GAME")
-@Data
 public class GameModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,4 +35,60 @@ public class GameModel {
     @Column(nullable = false)
     private List<GenreModel> genre;
     private Date ReleaseDate;
+
+    public Long getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(Long gameId) {
+        this.gameId = gameId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public List<PlatformModel> getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(List<PlatformModel> platform) {
+        this.platform = platform;
+    }
+
+    public DeveloperModel getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(DeveloperModel developer) {
+        this.developer = developer;
+    }
+
+    public PublisherModel getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(PublisherModel publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<GenreModel> getGenre() {
+        return genre;
+    }
+
+    public void setGenre(List<GenreModel> genre) {
+        this.genre = genre;
+    }
+
+    public Date getReleaseDate() {
+        return ReleaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        ReleaseDate = releaseDate;
+    }
 }

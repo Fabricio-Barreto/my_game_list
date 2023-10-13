@@ -27,6 +27,11 @@ public class GenreService {
         return genres.stream().map(genre -> new ModelMapper().map(genre, GenreDTO.class)).collect(Collectors.toList());
     }
 
+    /**
+     * method to get a genre by id
+     * @param id
+     * @return
+     */
     public Optional<GenreDTO> getGenreById(Long id) {
         Optional<GenreModel> genre = genreRepository.findById(id);
         if(genre.isEmpty()) throw new ResourceNotFoundException("Genre with id:" + id + "not found!");

@@ -14,7 +14,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "TB_USER")
-@Data
 public class UserModel implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
@@ -67,5 +66,54 @@ public class UserModel implements Serializable, UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<RoleModel> getRole() {
+        return role;
+    }
+
+    public void setRole(List<RoleModel> role) {
+        this.role = role;
+    }
+
+    public List<PhoneModel> getPhone() {
+        return phone;
+    }
+
+    public void setPhone(List<PhoneModel> phone) {
+        this.phone = phone;
+    }
+
+    public LocationModel getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationModel location) {
+        this.location = location;
     }
 }
